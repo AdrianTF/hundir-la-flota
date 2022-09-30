@@ -1,3 +1,5 @@
+import kotlin.random.Random
+
 data class Resources(
     var numRows: Int,
     var numCols: Int,
@@ -48,7 +50,43 @@ data class Resources(
     fun barcosJugador(){
 
         println("Coloca tus barcos:")
+        var i = 1;
+        while (i<=playerShips){
+            print("Inserte cordenada X para tu $i ship: ")
+            var x = readln().toInt()
+            print("Inserte cordenada Y para tu $i ship: ")
+            var y = readln().toInt()
 
+            if((x >= 0 && x < numRows) && (y >= 0 && y < numCols) && (playerGrid[x][y].equals(" ~ "))){
+
+                playerGrid[x][y] = " @ "
+                i++
+
+            }else if((x >= 0 && x < numRows) && (y >= 0 && y < numCols) && playerGrid[x][y].equals(" @ ")){
+                println("No puedes poner 2 o mas barcos in la misma localizacion")
+            }else if((x < 0 || x >= numRows) || (y < 0 || y >= numCols)){
+                println("No puedes poner barcos fuera del oceano")
+            }
+            //actualizarOceano()
+            //TODO uncomment method
+
+        }
 
     }
+
+    fun batalla(){
+        turnoJugador()
+        turnoBot()
+
+        actualizarOceano()
+        println("\nTus barcos: $playerShips | Bot: $computerShips\n")
+    }
+
+    fun turnoJugador(){
+        println("\nTU TURNO")
+        var x :Int
+        var y : Int
+
+    }
+
 }
