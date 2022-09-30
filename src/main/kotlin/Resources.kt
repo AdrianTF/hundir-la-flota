@@ -1,3 +1,5 @@
+import java.util.*
+import kotlin.random.Random
 data class Resources(
     var numRows: Int,
     var numCols: Int,
@@ -50,5 +52,23 @@ data class Resources(
         println("Coloca tus barcos:")
 
 
+    }
+
+    fun barcosOrdenador() {
+        println("\nColocando barcos del ordenador.")
+
+        var i = 1;
+        while(i <= computerShips){
+            var x = Random.nextInt(0, 10)
+            var y = Random.nextInt(0, 10)
+
+            if((x in 0 until numRows) && (y in 0 until numCols) && (playerGrid[x][y].equals(" ~ "))){
+                computerGrid[x][y] = " x "
+                println("$i. ship DEPLOYED")
+                i++
+            }
+        }
+        //actualizarOceano()
+        //TODO uncomment method
     }
 }
