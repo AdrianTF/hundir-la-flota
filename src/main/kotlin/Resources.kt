@@ -87,8 +87,62 @@ data class Resources(
         var x :Int
         var y : Int
 
+        do{
+            print("Inserta coordenada x: ")
+            x = readln().toInt()
+            print("Inserta coordenada y: ")
+            y = readln().toInt()
+            if ((x >= 0 && x < numRows) && (y >= 0 && y < numCols)) //valid guess
+            {
+                if (computerGrid[x][y].equals(" x "))
+                {
+                    println("POW! Has hundido un barco");
+                    playerGrid[x][y] = " ! ";
+                    --computerShips;
+                } else if (playerGrid[x][y].equals(" @ ")) {
+                    println("Oh no, has hundido tu propio barco :(");
+                    playerGrid[x][y] = " ! ";
+                    --playerShips;
+                } else if (playerGrid[x][y].equals(" ~ ")) {
+                    println("Lo siento, has fallado");
+                    playerGrid[x][y] = " - ";
+                }
+            } else if ((x < 0 || x >= numRows) || (y < 0 || y >= numCols))
+                println("No puedes disparar a barcos fuera del oceano");
+
+
+        }while ((x < 0 || x >= numRows) || (y < 0 || y >= numCols))
+
     }
 
+    fun turnoBot(){
+        println("\nTURNO BOT")
+
+        var x = -1
+        var y = -1
+        do {
+            var x = Random.nextInt(0, 10)
+            var y = Random.nextInt(0, 10)
+            if (x >= 0 && x < numRows && y >= 0 && y < numCols)
+            {
+                if (playerGrid[x][y].equals(" @ "))
+                {
+                    println("El bot ha hundido uno de tus barcos!")
+                    playerGrid[x][y] = " x "
+                    --playerShips
+                    ++computerShips
+                } else if (computerGrid[x][y].equals(" x ")) {
+                    println("El bot ha hundido su propio barco")
+                    playerGrid[x][y] = " ! "
+                } else if (playerGrid[x][y].equals(" ~ ")) {
+                    println("El ordenador ha fallado")
+
+                    if (missedGuesses[x][y] !== 1) missedGuesses[x][y] = 1
+                }
+            }
+        } while (x < 0 || x >= numRows || y < 0 || y >= numCols)
+
+    }
     fun barcosOrdenador() {
         println("\nColocando barcos del ordenador.")
 
