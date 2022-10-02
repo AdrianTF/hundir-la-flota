@@ -52,19 +52,27 @@ data class Resources(
         println("Coloca tus barcos:")
         var i = 1;
         while (i <= playerShips) {
-            var x:Int
-            var y:Int
-            do{
+            var x: Int
+            var y: Int
+            do {
 
                 print("Inserta coordenada x para su barco $i: ")
-                x = try { readln().toInt() } catch (e: NumberFormatException) { 99 }
+                x = try {
+                    readln().toInt()
+                } catch (e: NumberFormatException) {
+                    99
+                }
                 print("Inserta coordenada y para su barco $i: ")
-                y = try { readln().toInt() } catch (e: NumberFormatException) { 99 }
-                if(x == 99 || y ==99){
+                y = try {
+                    readln().toInt()
+                } catch (e: NumberFormatException) {
+                    99
+                }
+                if (x == 99 || y == 99) {
                     println("No ha escrito en un formato correcto las coordenadas vuelva a escribirlas")
                 }
 
-            }while (x == 99 || y ==99)
+            } while (x == 99 || y == 99)
 
             if ((x >= 0 && x < numRows) && (y >= 0 && y < numCols) && (playerGrid[x][y].equals("   ~  "))) {
 
@@ -96,17 +104,25 @@ data class Resources(
 
         do {
 
-            do{
+            do {
 
-                    print("Inserta coordenada x: ")
-                    x = try { readln().toInt() } catch (e: NumberFormatException) { 99 }
-                    print("Inserta coordenada y: ")
-                    y = try { readln().toInt() } catch (e: NumberFormatException) { 99 }
-                    if(x == 99 || y ==99){
-                        println("No ha escrito en un formato correcto las coordenadas vuelva a escribirlas")
-                    }
+                print("Inserta coordenada x: ")
+                x = try {
+                    readln().toInt()
+                } catch (e: NumberFormatException) {
+                    99
+                }
+                print("Inserta coordenada y: ")
+                y = try {
+                    readln().toInt()
+                } catch (e: NumberFormatException) {
+                    99
+                }
+                if (x == 99 || y == 99) {
+                    println("No ha escrito en un formato correcto las coordenadas vuelva a escribirlas")
+                }
 
-            }while (x == 99 || y ==99)
+            } while (x == 99 || y == 99)
 
             if ((x >= 0 && x < numRows) && (y >= 0 && y < numCols)) //valid guess
             {
@@ -118,7 +134,7 @@ data class Resources(
                     println("Oh no, has hundido tu propio barco :(");
                     playerGrid[x][y] = "   !  ";
                     --playerShips;
-                } else if (playerGrid[x][y].equals("   ~  ")) {
+                } else if (playerGrid[x][y].equals("   ~  ") || playerGrid[x][y].equals("   -  ") ) {
                     println("Lo siento, has fallado");
                     playerGrid[x][y] = "   -  ";
                 }
@@ -146,7 +162,8 @@ data class Resources(
                 } else if (computerGrid[x][y].equals("   x  ")) {
                     println("El bot ha hundido su propio barco")
                     playerGrid[x][y] = "   !  "
-                } else if (playerGrid[x][y].equals("   ~  ")) {
+                    --computerShips
+                } else if (playerGrid[x][y].equals("   ~  ") || playerGrid[x][y].equals("   -  ") ) {
                     println("El ordenador ha fallado")
 
                     if (missedGuesses[x][y] !== 1) missedGuesses[x][y] = 1
