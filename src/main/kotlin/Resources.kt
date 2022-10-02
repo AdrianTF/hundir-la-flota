@@ -67,9 +67,7 @@ data class Resources(
             }else if((x < 0 || x >= numRows) || (y < 0 || y >= numCols)){
                 println("No puedes poner barcos fuera del oceano")
             }
-            //actualizarOceano()
-            //TODO uncomment method
-
+            actualizarOceano()
         }
 
     }
@@ -78,7 +76,7 @@ data class Resources(
         turnoJugador()
         //turnoBot()
 
-        //actualizarOceano()
+        actualizarOceano()
         println("\nTus barcos: $playerShips | Bot: $computerShips\n")
     }
 
@@ -99,11 +97,47 @@ data class Resources(
 
             if((x in 0 until numRows) && (y in 0 until numCols) && (playerGrid[x][y].equals(" ~ "))){
                 computerGrid[x][y] = " x "
-                println("$i. ship DEPLOYED")
+                println("$i. barco colocado.")
                 i++
             }
         }
-        //actualizarOceano()
-        //TODO uncomment method
+        actualizarOceano()
+    }
+
+    fun actualizarOceano(){
+        println()
+
+        print(" | ")
+        for(i in 0..numCols-1){
+            print("  $i   ")
+        }
+        println()
+
+        for(x in 0..playerGrid.size){
+            print("$x|")
+
+            for(y in 0..playerGrid[x].size){
+                print("${playerGrid[x][y]}")
+            }
+
+            println("|$x")
+        }
+
+        print(" | ")
+        for(i in 0..numCols-1){
+            print("  $i   ")
+        }
+        println("")
+
+    }
+
+    fun gameOver() {
+        println("Your ships: $playerShips | Computer ships: $computerShips")
+        if(playerShips > 0 && computerShips <= 0){
+            println("¡Enhorabuena! Has ganado la batalla.")
+        } else {
+            println("Lo siento, has perdido la batalla.")
+        }
+        println()
     }
 }
