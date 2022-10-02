@@ -58,7 +58,7 @@ data class Resources(
 
                 print("Inserta coordenada x para su barco $i: ")
                 x = try { readln().toInt() } catch (e: NumberFormatException) { 99 }
-                print("Inserta coordenada y para su barco$i: ")
+                print("Inserta coordenada y para su barco $i: ")
                 y = try { readln().toInt() } catch (e: NumberFormatException) { 99 }
                 if(x == 99 || y ==99){
                     println("No ha escrito en un formato correcto las coordenadas vuelva a escribirlas")
