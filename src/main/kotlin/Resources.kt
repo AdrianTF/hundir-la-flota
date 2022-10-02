@@ -165,11 +165,11 @@ data class Resources(
         }
         println()
 
-        for (x in 0..playerGrid.size) {
+        for (x in 0 until playerGrid.size) { //Aádido until para que no de error de bound
             print("$x|")
 
-            for (y in 0..playerGrid[x].size) {
-                print("${playerGrid[x][y]}") //TODO Esta linea da OutOfBoundsException
+            for (y in 0 until playerGrid[x].size) { //Aádido until para que no de error de bound
+                print("${playerGrid[x][y]}")
             }
 
             println("|$x")
