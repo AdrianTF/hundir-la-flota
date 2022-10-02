@@ -52,10 +52,19 @@ data class Resources(
         println("Coloca tus barcos:")
         var i = 1;
         while (i <= playerShips) {
-            print("Inserte cordenada X para tu barco #$i: ")
-            var x = readln().toInt()
-            print("Inserte cordenada Y para tu barco #$i: ")
-            var y = readln().toInt()
+            var x:Int
+            var y:Int
+            do{
+
+                print("Inserta coordenada x para su barco $i: ")
+                x = try { readln().toInt() } catch (e: NumberFormatException) { 99 }
+                print("Inserta coordenada y para su barco$i: ")
+                y = try { readln().toInt() } catch (e: NumberFormatException) { 99 }
+                if(x == 99 || y ==99){
+                    println("No ha escrito en un formato correcto las coordenadas vuelva a escribirlas")
+                }
+
+            }while (x == 99 || y ==99)
 
             if ((x >= 0 && x < numRows) && (y >= 0 && y < numCols) && (playerGrid[x][y].equals("   ~  "))) {
 
@@ -86,10 +95,19 @@ data class Resources(
         var y: Int
 
         do {
-            print("Inserta coordenada x: ")
-            x = readln().toInt()
-            print("Inserta coordenada y: ")
-            y = readln().toInt()
+
+            do{
+
+                    print("Inserta coordenada x: ")
+                    x = try { readln().toInt() } catch (e: NumberFormatException) { 99 }
+                    print("Inserta coordenada y: ")
+                    y = try { readln().toInt() } catch (e: NumberFormatException) { 99 }
+                    if(x == 99 || y ==99){
+                        println("No ha escrito en un formato correcto las coordenadas vuelva a escribirlas")
+                    }
+
+            }while (x == 99 || y ==99)
+
             if ((x >= 0 && x < numRows) && (y >= 0 && y < numCols)) //valid guess
             {
                 if (computerGrid[x][y].equals("   x  ")) {
@@ -98,7 +116,7 @@ data class Resources(
                     --computerShips;
                 } else if (playerGrid[x][y].equals("   @  ")) {
                     println("Oh no, has hundido tu propio barco :(");
-                    playerGrid[x][y] = " ! ";
+                    playerGrid[x][y] = "   !  ";
                     --playerShips;
                 } else if (playerGrid[x][y].equals("   ~  ")) {
                     println("Lo siento, has fallado");
