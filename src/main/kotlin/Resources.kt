@@ -74,7 +74,7 @@ data class Resources(
 
     fun batalla() {
         turnoJugador()
-        //turnoBot() //TODO Uncomment this?
+        turnoBot()
 
         actualizarOceano()
         println("\nTus barcos: $playerShips | Bot: $computerShips\n")
