@@ -1,4 +1,3 @@
-import java.util.*
 import kotlin.random.Random
 
 data class Resources(
@@ -12,7 +11,7 @@ data class Resources(
     var playerGrid: Array<Array<String?>> = Array(numRows) { arrayOfNulls<String>(numCols) }
     var computerGrid: Array<Array<String?>> = Array(numRows) { arrayOfNulls<String>(numCols) }
     val missedGuesses: Array<Array<Int?>> = Array(numRows) { arrayOfNulls<Int>(numCols) }
-
+    //TODO Revisar todos los strings y asegurarnos de que sean iguales, sino las condiciones no se cumpliran nunca.
     fun crearOceano() {
         //Linea caracteres oceano
         print(" | ")
@@ -53,9 +52,9 @@ data class Resources(
         println("Coloca tus barcos:")
         var i = 1;
         while (i <= playerShips) {
-            print("Inserte cordenada X para tu $i ship: ")
+            print("Inserte cordenada X para tu barco #$i: ")
             var x = readln().toInt()
-            print("Inserte cordenada Y para tu $i ship: ")
+            print("Inserte cordenada Y para tu barco #$i : ")
             var y = readln().toInt()
 
             if ((x >= 0 && x < numRows) && (y >= 0 && y < numCols) && (playerGrid[x][y].equals(" ~ "))) {
@@ -75,7 +74,7 @@ data class Resources(
 
     fun batalla() {
         turnoJugador()
-        //turnoBot()
+        //turnoBot() //TODO Uncomment this?
 
         actualizarOceano()
         println("\nTus barcos: $playerShips | Bot: $computerShips\n")
@@ -185,7 +184,7 @@ data class Resources(
     }
 
     fun gameOver() {
-        println("Your ships: $playerShips | Computer ships: $computerShips")
+        println("Tus barcos: $playerShips | Bot: $computerShips")
         if (playerShips > 0 && computerShips <= 0) {
             println("¡Enhorabuena! Has ganado la batalla.")
         } else {
