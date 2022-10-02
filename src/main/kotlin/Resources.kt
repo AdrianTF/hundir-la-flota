@@ -54,15 +54,15 @@ data class Resources(
         while (i <= playerShips) {
             print("Inserte cordenada X para tu barco #$i: ")
             var x = readln().toInt()
-            print("Inserte cordenada Y para tu barco #$i : ")
+            print("Inserte cordenada Y para tu barco #$i: ")
             var y = readln().toInt()
 
-            if ((x >= 0 && x < numRows) && (y >= 0 && y < numCols) && (playerGrid[x][y].equals(" ~ "))) {
+            if ((x >= 0 && x < numRows) && (y >= 0 && y < numCols) && (playerGrid[x][y].equals("   ~  "))) {
 
-                playerGrid[x][y] = " @ "
+                playerGrid[x][y] = "   @  "
                 i++
 
-            } else if ((x >= 0 && x < numRows) && (y >= 0 && y < numCols) && playerGrid[x][y].equals(" @ ")) {
+            } else if ((x >= 0 && x < numRows) && (y >= 0 && y < numCols) && playerGrid[x][y].equals("   @  ")) {
                 println("No puedes poner 2 o mas barcos in la misma localizacion")
             } else if ((x < 0 || x >= numRows) || (y < 0 || y >= numCols)) {
                 println("No puedes poner barcos fuera del oceano")
@@ -92,17 +92,17 @@ data class Resources(
             y = readln().toInt()
             if ((x >= 0 && x < numRows) && (y >= 0 && y < numCols)) //valid guess
             {
-                if (computerGrid[x][y].equals(" x ")) {
+                if (computerGrid[x][y].equals("  x  ")) {
                     println("POW! Has hundido un barco");
                     playerGrid[x][y] = " ! ";
                     --computerShips;
-                } else if (playerGrid[x][y].equals(" @ ")) {
+                } else if (playerGrid[x][y].equals("  @  ")) {
                     println("Oh no, has hundido tu propio barco :(");
                     playerGrid[x][y] = " ! ";
                     --playerShips;
-                } else if (playerGrid[x][y].equals(" ~ ")) {
+                } else if (playerGrid[x][y].equals("   ~  ")) {
                     println("Lo siento, has fallado");
-                    playerGrid[x][y] = " - ";
+                    playerGrid[x][y] = "   -  ";
                 }
             } else if ((x < 0 || x >= numRows) || (y < 0 || y >= numCols))
                 println("No puedes disparar a barcos fuera del oceano");
@@ -121,15 +121,15 @@ data class Resources(
             var x = Random.nextInt(0, 10)
             var y = Random.nextInt(0, 10)
             if (x >= 0 && x < numRows && y >= 0 && y < numCols) {
-                if (playerGrid[x][y].equals(" @ ")) {
+                if (playerGrid[x][y].equals("   @  ")) {
                     println("El bot ha hundido uno de tus barcos!")
-                    playerGrid[x][y] = " x "
+                    playerGrid[x][y] = "   x  "
                     --playerShips
                     ++computerShips
-                } else if (computerGrid[x][y].equals(" x ")) {
+                } else if (computerGrid[x][y].equals("   x  ")) {
                     println("El bot ha hundido su propio barco")
-                    playerGrid[x][y] = " ! "
-                } else if (playerGrid[x][y].equals(" ~ ")) {
+                    playerGrid[x][y] = "   !  "
+                } else if (playerGrid[x][y].equals("   ~  ")) {
                     println("El ordenador ha fallado")
 
                     if (missedGuesses[x][y] !== 1) missedGuesses[x][y] = 1
@@ -147,8 +147,8 @@ data class Resources(
             var x = Random.nextInt(0, 10)
             var y = Random.nextInt(0, 10)
 
-            if ((x in 0 until numRows) && (y in 0 until numCols) && (playerGrid[x][y].equals(" ~ "))) {
-                computerGrid[x][y] = " x "
+            if ((x in 0 until numRows) && (y in 0 until numCols) && (playerGrid[x][y].equals("   ~  "))) {
+                computerGrid[x][y] = "   x  "
                 println("$i. barco colocado.")
                 i++
             }
