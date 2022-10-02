@@ -98,7 +98,7 @@ data class Resources(
                     --computerShips;
                 } else if (playerGrid[x][y].equals("   @  ")) {
                     println("Oh no, has hundido tu propio barco :(");
-                    playerGrid[x][y] = " ! ";
+                    playerGrid[x][y] = "   !  ";
                     --playerShips;
                 } else if (playerGrid[x][y].equals("   ~  ")) {
                     println("Lo siento, has fallado");
@@ -147,7 +147,7 @@ data class Resources(
             var y = Random.nextInt(0, 10)
 
             if ((x in 0 until numRows) && (y in 0 until numCols) && (playerGrid[x][y].equals("   ~  "))) {
-                computerGrid[x][y] = " x "
+                computerGrid[x][y] = "   x  "
                 println("$i. barco colocado.")
                 i++
             }
