@@ -10,8 +10,16 @@ fun main() {
 
 
     rs.crearOceano()
+
     rs.barcosJugador()
 
+    rs.barcosOrdenador()
+
+    do{
+        rs.batalla()
+    } while (rs.playerShips != 0 && rs.computerShips != 0)
+
+    rs.gameOver()
 }
 
 
