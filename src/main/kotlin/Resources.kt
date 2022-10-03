@@ -5,107 +5,97 @@ data class Resources(
     var numCols: Int,
     var playerShips: Int,
     var computerShips: Int
-
 ) {
-
-    var playerGrid: Array<Array<String?>> = Array(numRows) { arrayOfNulls<String>(numCols) }
-    var computerGrid: Array<Array<String?>> = Array(numRows) { arrayOfNulls<String>(numCols) }
-    val missedGuesses: Array<Array<Int?>> = Array(numRows) { arrayOfNulls<Int>(numCols) }
+    private var playerGrid: Array<Array<String?>> = Array(numRows) { arrayOfNulls(numCols) }
+    private var computerGrid: Array<Array<String?>> = Array(numRows) { arrayOfNulls(numCols) }
 
     fun crearOceano() {
         //Linea caracteres oceano
         print(" | ")
-        for (i in 0..numCols - 1) {
+        for (i in 0 until numCols) {
             print("  $i   ")
         }
         println()
 
         //Primera seccion del oceano
-        for (i in 0..playerGrid.size - 1) {
-            for (j in 0..playerGrid[i].size - 1) {
+        for (i in playerGrid.indices) {
+            for (j in 0 until playerGrid[i].size) {
                 playerGrid[i][j] = "   ~  "
                 computerGrid[i][j] = "   ~  "
-                if (j == 0) {
-                    print("$i|${playerGrid[i][j]}")
-                } else if (j == playerGrid[i].size - 1) {
-                    print("${playerGrid[i][j]}|$i")
-                } else {
-                    print("${playerGrid[i][j]}")
-                }
+                when (j) {
+                    0 -> {
+                        print("$i|${playerGrid[i][j]}")
+                    }
 
+                    playerGrid[i].size - 1 -> {
+                        print("${playerGrid[i][j]}|$i")
+                    }
+
+                    else -> {
+                        print("${playerGrid[i][j]}")
+                    }
+                }
             }
             println("")
         }
 
         //Segunda parte oceano
         print(" | ")
-        for (i in 0..numCols - 1) {
+        for (i in 0 until numCols) {
             print("  $i   ")
         }
         println("")
-
-
     }
 
     fun barcosJugador() {
-
         println("Coloca tus barcos:")
-        var i = 1;
+        var i = 1
         while (i <= playerShips) {
             var x: Int
             var y: Int
             do {
-
-                print("Inserta coordenada x para su barco $i: ")
+                print("Inserta coordenada x para tu barco #$i: ")
                 x = try {
                     readln().toInt()
                 } catch (e: NumberFormatException) {
                     99
                 }
-                print("Inserta coordenada y para su barco $i: ")
+                print("Inserta coordenada y para tu barco #$i: ")
                 y = try {
                     readln().toInt()
                 } catch (e: NumberFormatException) {
                     99
                 }
                 if (x == 99 || y == 99) {
-                    println("No ha escrito en un formato correcto las coordenadas vuelva a escribirlas")
+                    println("No ha escrito en un formato correcto las coordenadas vuelva a escribirlas.")
                 }
-
             } while (x == 99 || y == 99)
 
-            if ((x >= 0 && x < numRows) && (y >= 0 && y < numCols) && (playerGrid[x][y].equals("   ~  "))) {
-
+            if ((x in 0 until numRows) && (y in 0 until numCols) && (playerGrid[x][y].equals("   ~  "))) {
                 playerGrid[x][y] = "   @  "
                 i++
-
-            } else if ((x >= 0 && x < numRows) && (y >= 0 && y < numCols) && playerGrid[x][y].equals("   @  ")) {
-                println("No puedes poner 2 o mas barcos in la misma localizacion")
+            } else if ((x in 0 until numRows) && (y in 0 until numCols) && playerGrid[x][y].equals("   @  ")) {
+                println("No puedes poner 2 o mas barcos en la misma localización.")
             } else if ((x < 0 || x >= numRows) || (y < 0 || y >= numCols)) {
-                println("No puedes poner barcos fuera del oceano")
+                println("No puedes poner barcos fuera del oceano.")
             }
             actualizarOceano()
         }
-
     }
 
     fun batalla() {
         turnoJugador()
         turnoBot()
-
         actualizarOceano()
         println("\nTus barcos: $playerShips | Bot: $computerShips\n")
     }
 
-    fun turnoJugador() {
+    private fun turnoJugador() {
         println("\nTU TURNO")
         var x: Int
         var y: Int
-
         do {
-
             do {
-
                 print("Inserta coordenada x: ")
                 x = try {
                     readln().toInt()
@@ -119,70 +109,60 @@ data class Resources(
                     99
                 }
                 if (x == 99 || y == 99) {
-                    println("No ha escrito en un formato correcto las coordenadas vuelva a escribirlas")
+                    println("No ha escrito en un formato correcto las coordenadas vuelva a escribirlas.")
                 }
-
             } while (x == 99 || y == 99)
 
-            if ((x >= 0 && x < numRows) && (y >= 0 && y < numCols)) //valid guess
+            if ((x in 0 until numRows) && (y in 0 until numCols)) //valid guess
             {
                 if (computerGrid[x][y].equals("   @  ")) {
-                    println("POW! Has hundido un barco")
-                    playerGrid[x][y] = "   #  "
-                    computerGrid[x][y] = "   #  "
-                    --computerShips;
-                } else if (playerGrid[x][y].equals("   @  ")) {
-                    println("Oh no, has hundido tu propio barco :(");
-                    playerGrid[x][y] = "   !  ";
-                    --playerShips;
-                } else if (playerGrid[x][y].equals("   ~  ") || playerGrid[x][y].equals("   -  ") ) {
-                    println("Lo siento, has fallado");
-                    playerGrid[x][y] = "   -  ";
-                }
-            } else if ((x < 0 || x >= numRows) || (y < 0 || y >= numCols))
-                println("No puedes disparar a barcos fuera del oceano");
-
-
-        } while ((x < 0 || x >= numRows) || (y < 0 || y >= numCols))
-
-    }
-
-    fun turnoBot() {
-        println("\nTURNO BOT")
-
-        var x = -1
-        var y = -1
-        do {
-            var x = Random.nextInt(0, 10)
-            var y = Random.nextInt(0, 10)
-            if (x >= 0 && x < numRows && y >= 0 && y < numCols) {
-                if (playerGrid[x][y].equals("   @  ")) {
-                    println("El bot ha hundido uno de tus barcos!")
-                    playerGrid[x][y] = "   !  "
-                    --playerShips
-                } else if (computerGrid[x][y].equals("   @  ")) {
-                    println("El bot ha hundido su propio barco")
+                    println("¡PUM! Has hundido un barco")
                     playerGrid[x][y] = "   #  "
                     computerGrid[x][y] = "   #  "
                     --computerShips
-                } else if (playerGrid[x][y].equals("   ~  ") || playerGrid[x][y].equals("   -  ") ) {
-                    println("El ordenador ha fallado")
+                } else if (playerGrid[x][y].equals("   @  ")) {
+                    println("¡Oh no, has hundido tu propio barco! :(")
+                    playerGrid[x][y] = "   !  "
+                    --playerShips
+                } else if (playerGrid[x][y].equals("   ~  ") || playerGrid[x][y].equals("   -  ")) {
+                    println("Lo siento, has fallado...")
+                    playerGrid[x][y] = "   -  "
+                }
+            } else {
+                println("No puedes disparar a barcos fuera del oceano.")
+            }
+        } while ((x < 0 || x >= numRows) || (y < 0 || y >= numCols))
+    }
 
-                    if (missedGuesses[x][y] !== 1) missedGuesses[x][y] = 1
+    private fun turnoBot() {
+        println("\nTURNO BOT")
+        do {
+            val x = Random.nextInt(0, 10)
+            val y = Random.nextInt(0, 10)
+            if (x in 0 until numRows && y >= 0 && y < numCols) {
+                if (playerGrid[x][y].equals("   @  ")) {
+                    println("¡El bot ha hundido uno de tus barcos!")
+                    playerGrid[x][y] = "   !  "
+                    --playerShips
+                } else if (computerGrid[x][y].equals("   @  ")) {
+                    println("El bot ha hundido su propio barco...")
+                    playerGrid[x][y] = "   #  "
+                    computerGrid[x][y] = "   #  "
+                    --computerShips
+                } else if (playerGrid[x][y].equals("   ~  ") || playerGrid[x][y].equals("   -  ")) {
+                    println("El bot ha fallado :)")
                 }
             }
         } while (x < 0 || x >= numRows || y < 0 || y >= numCols)
 
     }
 
-    fun barcosOrdenador() {
-        println("\nColocando barcos del ordenador.")
-
-        var i = 1;
+    fun barcosBot() {
+        println("\nColocando barcos del bot.")
+        var i = 1
         while (i <= computerShips) {
-            var x = Random.nextInt(0, 10)
-            var y = Random.nextInt(0, 10)
-
+            val x = Random.nextInt(0, 10)
+            val y = Random.nextInt(0, 10)
             if ((x in 0 until numRows) && (y in 0 until numCols) && (playerGrid[x][y].equals("   ~  "))) {
                 computerGrid[x][y] = "   @  "
                 println("$i. barco colocado.")
@@ -192,31 +172,28 @@ data class Resources(
         actualizarOceano()
     }
 
-    fun actualizarOceano() {
+    private fun actualizarOceano() {
         println()
 
         print(" | ")
-        for (i in 0..numCols - 1) {
+        for (i in 0 until numCols) {
             print("  $i   ")
         }
         println()
 
-        for (x in 0 until playerGrid.size) { //Aádido until para que no de error de bound
+        for (x in playerGrid.indices) { //Aádido until para que no de error de bound
             print("$x|")
-
             for (y in 0 until playerGrid[x].size) { //Aádido until para que no de error de bound
                 print("${playerGrid[x][y]}")
             }
-
             println("|$x")
         }
 
         print(" | ")
-        for (i in 0..numCols - 1) {
+        for (i in 0 until numCols) {
             print("  $i   ")
         }
         println("")
-
     }
 
     fun gameOver() {

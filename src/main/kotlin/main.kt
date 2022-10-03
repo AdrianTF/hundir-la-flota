@@ -1,25 +1,22 @@
-import com.sun.xml.internal.fastinfoset.util.StringArray
-
-
 fun main() {
-
-    var rs = Resources(10,10,7,7)
+    //Inicializamos el objeto
+    val juego = Resources(10,10,7,7)
 
     println("Bienvenido al juego de hundir la flota")
     println("  ")
 
 
-    rs.crearOceano()
+    juego.crearOceano()
 
-    rs.barcosJugador()
+    juego.barcosJugador()
 
-    rs.barcosOrdenador()
+    juego.barcosBot()
 
     do{
-        rs.batalla()
-    } while (rs.playerShips != 0 && rs.computerShips != 0)
+        juego.batalla()
+    } while (juego.playerShips != 0 && juego.computerShips != 0)
 
-    rs.gameOver()
+    juego.gameOver()
 }
 
 
