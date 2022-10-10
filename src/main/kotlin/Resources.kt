@@ -1,5 +1,11 @@
 import kotlin.random.Random
 
+/**
+ * @param numRows número de filas que tendrá el mar
+ * @param numCols número de columnas que tendrá el mar
+ * @param playerShips número de barcos del jugador
+ * @param computerShips número de barcos del bot
+ */
 data class Resources(
     var numRows: Int,
     var numCols: Int,
@@ -9,6 +15,9 @@ data class Resources(
     private var playerGrid: Array<Array<String?>> = Array(numRows) { arrayOfNulls(numCols) }
     private var computerGrid: Array<Array<String?>> = Array(numRows) { arrayOfNulls(numCols) }
 
+    /**
+     * Este método genera un grid y lo almacena en un array bidimensional.
+     */
     fun crearOceano() {
         //Linea caracteres oceano
         print(" | ")
@@ -47,6 +56,9 @@ data class Resources(
         println("")
     }
 
+    /**
+     * Este método coloca los barcos del jugador en el grid y en el array bidimensional.
+     */
     fun barcosJugador() {
         println("Coloca tus barcos:")
         var i = 1
@@ -83,6 +95,9 @@ data class Resources(
         }
     }
 
+    /**
+     * Este método ejecuta la batalla. Para ello ejecuta el turno de cada oponente y actualiza ambos grids.
+     */
     fun batalla() {
         turnoJugador()
         turnoBot()
@@ -90,6 +105,9 @@ data class Resources(
         println("\nTus barcos: $playerShips | Bot: $computerShips\n")
     }
 
+    /**
+     * Este método ejecuta el turno del jugador.
+     */
     private fun turnoJugador() {
         println("\nTU TURNO")
         var x: Int
@@ -134,6 +152,9 @@ data class Resources(
         } while ((x < 0 || x >= numRows) || (y < 0 || y >= numCols))
     }
 
+    /**
+     * Este método ejecuta el turno del bot.
+     */
     private fun turnoBot() {
         println("\nTURNO BOT")
         do {
@@ -157,6 +178,9 @@ data class Resources(
 
     }
 
+    /**
+     * Este método coloca los barcos del bot en el grid y en el array bidimensional.
+     */
     fun barcosBot() {
         println("\nColocando barcos del bot.")
         var i = 1
@@ -172,6 +196,9 @@ data class Resources(
         actualizarOceano()
     }
 
+    /**
+     * Este método comprueba el estado de ambos arrays bidimensionales y actualiza el grid.
+     */
     private fun actualizarOceano() {
         println()
 
@@ -196,6 +223,9 @@ data class Resources(
         println("")
     }
 
+    /**
+     * Este método comprueba quien ha sido el ganador de la partida y pone fin a la misma.
+     */
     fun gameOver() {
         println("Tus barcos: $playerShips | Bot: $computerShips")
         if (playerShips > 0 && computerShips <= 0) {
